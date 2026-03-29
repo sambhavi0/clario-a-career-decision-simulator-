@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clario – Your Future, Your Choice</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="noise"></div>
+<div class="ripple-container" id="rippleContainer"></div>
+
+<!-- ══════════════════════════════
+     LOADER
+══════════════════════════════ -->
+<div id="loader">
+  <div class="loader-mark">
+    <svg viewBox="0 0 32 32" fill="none">
+      <path d="M16 2C16 2 15.1 10.2 14.4 14.4C10.2 15.1 2 16 2 16C2 16 10.2 16.9 14.4 17.6C15.1 21.8 16 30 16 30C16 30 16.9 21.8 17.6 17.6C21.8 16.9 30 16 30 16C30 16 21.8 15.1 17.6 14.4C16.9 10.2 16 2 16 2Z" fill="white"/>
+    </svg>
+  </div>
+  <div class="logo-wrap">
+    <span class="logo-name">Clario</span>
+    <span class="logo-tag">Your future, your choice.</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 1 — PROFILE
+══════════════════════════════ -->
+<div class="page" id="profilePage">
+  <div class="page-inner">
+    <div class="topbar">
+      <svg class="topbar-mark" viewBox="0 0 40 40" fill="none">
+        <path d="M20 2C20 2 18.8 12.5 18 18C12.5 18.8 2 20 2 20C2 20 12.5 21.2 18 22C18.8 27.5 20 38 20 38C20 38 21.2 27.5 22 22C27.5 21.2 38 20 38 20C38 20 27.5 18.8 22 18C21.2 12.5 20 2 20 2Z" fill="white"/>
+        <circle cx="8" cy="8" r="2" fill="white" opacity="0.45"/>
+        <circle cx="32" cy="8" r="2" fill="white" opacity="0.45"/>
+        <circle cx="8" cy="32" r="2" fill="white" opacity="0.45"/>
+        <circle cx="32" cy="32" r="2" fill="white" opacity="0.45"/>
+      </svg>
+      <span class="topbar-name">Clario</span>
+    </div>
+    <div class="page-heading">
+      <h1>Create your profile</h1>
+      <p>Tell us about yourself to get started</p>
+    </div>
+    <!-- YOUR SKILL -->
+    <div class="section-row">
+      <div class="section-label">Your skill :</div>
+      <div class="chips" id="skill-chips">
+        <button class="chip" onclick="toggleChip(this)">Python</button>
+        <button class="chip" onclick="toggleChip(this)">Sql</button>
+        <button class="chip" onclick="toggleChip(this)">Html</button>
+        <button class="chip" onclick="toggleChip(this)">React</button>
+        <div class="add-input-wrap" id="skill-input-wrap">
+          <input type="text" id="skill-input" placeholder="e.g. Vue" maxlength="20" onkeydown="addOnEnter(event,'skill')">
+          <button onclick="confirmAdd('skill')">Add</button>
+        </div>
+        <button class="chip-add" id="skill-add-btn" onclick="showAddInput('skill')">+Add skill</button>
+      </div>
+    </div>
+    <!-- EXPERIENCE -->
+    <div class="section-row">
+      <div class="section-label">Experience level :</div>
+      <div class="chips" id="exp-chips">
+        <button class="chip" onclick="toggleSingle(this,'exp-chips')">beginner</button>
+        <button class="chip" onclick="toggleSingle(this,'exp-chips')">intermediate</button>
+        <button class="chip" onclick="toggleSingle(this,'exp-chips')">advanced</button>
+      </div>
+    </div>
+    <!-- INTERESTS -->
+    <div class="section-row" style="flex-direction:column;gap:10px">
+      <div class="section-label">Interests :</div>
+      <div class="chips" id="interest-chips">
+        <button class="check-chip" onclick="toggleCheck(this)"><span class="check-box"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="#e8eaf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>AI</button>
+        <button class="check-chip" onclick="toggleCheck(this)"><span class="check-box"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="#e8eaf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Web development</button>
+        <button class="check-chip" onclick="toggleCheck(this)"><span class="check-box"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="#e8eaf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Finance</button>
+        <button class="check-chip" onclick="toggleCheck(this)"><span class="check-box"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="#e8eaf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Data science</button>
+        <div class="add-input-wrap" id="interest-input-wrap">
+          <input type="text" id="interest-input" placeholder="e.g. Design" maxlength="20" onkeydown="addOnEnter(event,'interest')">
+          <button onclick="confirmAdd('interest')">Add</button>
+        </div>
+        <button class="chip-add" id="interest-add-btn" onclick="showAddInput('interest')">+Add interests</button>
+      </div>
+    </div>
+    <!-- GOAL -->
+    <div class="section-row" style="flex-direction:column;gap:10px">
+      <div class="section-label">Your Goal:</div>
+      <div class="chips" id="goal-chips">
+        <button class="check-chip" onclick="toggleCheck(this)"><span class="check-box"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="#e8eaf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Get a job</button>
+        <button class="check-chip" onclick="toggleCheck(this)"><span class="check-box"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="#e8eaf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Find a Internship</button>
+        <button class="check-chip" onclick="toggleCheck(this)"><span class="check-box"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="#e8eaf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Freelance work</button>
+        <button class="check-chip" onclick="toggleCheck(this)"><span class="check-box"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="#e8eaf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Start a startup</button>
+      </div>
+    </div>
+    <div class="gen-wrap">
+      <button class="gen-btn" onclick="handleGenerate()">Generate recommendations</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 2 — PATH GENERATOR RESULTS
+══════════════════════════════ -->
+<div class="page" id="pathPage">
+  <div class="page-inner">
+    <div class="topbar" style="margin-bottom:20px">
+      <button class="back-btn" onclick="goTo('pathPage','profilePage')">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <div class="page-heading">
+      <h1>Path Generator Results</h1>
+      <p>Based on your profile, here are your personalized result</p>
+    </div>
+    <div class="path-grid">
+      <!-- Path A -->
+      <div class="path-card" onclick="goTo('pathPage','outcomePage')">
+        <div class="path-card-header" id="pathA-title">Path A</div>
+        <div class="path-card" onclick="selectPath(0)"></div>
+        <div class="path-card-icon">
+          <!-- bar chart icon -->
+          <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5" y="18" width="6" height="14" rx="1.5" fill="white" opacity="0.9"/>
+            <rect x="16" y="10" width="6" height="22" rx="1.5" fill="white" opacity="0.9"/>
+            <rect x="27" y="5" width="6" height="27" rx="1.5" fill="white" opacity="0.9"/>
+          </svg>
+        </div>
+        <div class="path-card-lines">
+          <div class="path-line long"></div>
+          <div class="path-line med"></div>
+          <div class="path-line short"></div>
+        </div>
+        <button class="view-btn">View Details</button>
+      </div>
+      <!-- Path B -->
+      <div class="path-card" onclick="goTo('pathPage','outcomePage')">
+        <div class="path-card-header" id="pathB-title">Path B</div>
+        <div class="path-card" onclick="selectPath(0)"></div>
+        <div class="path-card-icon">
+          <!-- trophy icon -->
+          <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 24C14.03 24 10 19.97 10 15V8H28V15C28 19.97 23.97 24 19 24Z" fill="white" opacity="0.9"/>
+            <path d="M10 10H6C6 10 6 17 10 17" stroke="white" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+            <path d="M28 10H32C32 10 32 17 28 17" stroke="white" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+            <rect x="15" y="24" width="8" height="4" rx="1" fill="white" opacity="0.7"/>
+            <rect x="12" y="28" width="14" height="2.5" rx="1.2" fill="white" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="path-card-lines">
+          <div class="path-line long"></div>
+          <div class="path-line med"></div>
+          <div class="path-line short"></div>
+        </div>
+        <button class="view-btn">View Details</button>
+      </div>
+      <!-- Path C -->
+      <div class="path-card" onclick="goTo('pathPage','outcomePage')">
+        <div class="path-card-header" id="pathC-title">Path C</div>
+        <div class="path-card" onclick="selectPath(0)"></div>
+        <div class="path-card-icon">
+          <!-- code / terminal icon -->
+          <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="8" width="30" height="22" rx="3" stroke="white" stroke-width="1.8" opacity="0.9"/>
+            <line x1="4" y1="14" x2="34" y2="14" stroke="white" stroke-width="1.4" opacity="0.5"/>
+            <circle cx="8.5" cy="11" r="1.2" fill="white" opacity="0.5"/>
+            <circle cx="12.5" cy="11" r="1.2" fill="white" opacity="0.5"/>
+            <circle cx="16.5" cy="11" r="1.2" fill="white" opacity="0.5"/>
+            <path d="M10 20L14 23L10 26" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+            <line x1="16" y1="26" x2="27" y2="26" stroke="white" stroke-width="1.6" stroke-linecap="round" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="path-card-lines">
+          <div class="path-line long"></div>
+          <div class="path-line med"></div>
+          <div class="path-line short"></div>
+        </div>
+        <button class="view-btn">View Details</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE 3 — OUTCOME VISUALIZATION
+══════════════════════════════ -->
+<div class="page" id="outcomePage">
+  <div class="page-inner">
+    <div class="topbar" style="margin-bottom:20px">
+      <button class="back-btn" onclick="goTo('outcomePage','pathPage')">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <div class="page-heading">
+      <h1>Outcome Visualization</h1>
+      <p>Based on your profile, here are your personalized career paths.</p>
+    </div>
+    <div class="outcome-grid">
+      <!-- LEFT -->
+      <div class="outcome-left">
+        <!-- Progress Plan -->
+        <div class="outcome-card">
+          <div class="outcome-card-title">Your Progress Plan.</div>
+          <div class="timeline-row"><span class="tl-dot green"></span>In 3 months :</div>
+          <div style="height:5px"></div>
+          <div class="timeline-row"><span class="tl-dot yellow"></span>In 6 months :</div>
+          <div style="height:5px"></div>
+          <div class="timeline-row"><span class="tl-dot blue"></span>In 12 months :</div>
+          <div style="height:14px"></div>
+          <div class="skill-gap-label">Skill gap :</div>
+          <div class="skill-gap-bar"><div class="skill-gap-fill"></div></div>
+          <div class="outcome-row2">
+            <div class="mini-card">
+              <div class="mini-label">Skill level :</div>
+              <div class="mini-value">Medium <span class="warn-icon">⚠️</span></div>
+            </div>
+            <div class="potential-badge">
+              <div class="potential-label"><span class="potential-dot"></span>Potential Outcome :</div>
+              <div class="potential-value"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- RIGHT -->
+      <div class="outcome-right">
+        <div class="best-card">
+          <div class="best-card-header"><span class="star-icon">⭐</span> Best Path For You :</div>
+          <div class="why-section">
+            <div class="why-title">Why this path suits you :</div>
+            <div class="why-dot">Aligns with your current skill set</div>
+            <div class="why-dot">Matches your stated goals</div>
+            <div class="why-dot">High growth potential in market</div>
+          </div>
+          <div class="action-section">
+            <div class="action-title">Next 30 day: action plan</div>
+            <div class="action-dot"><span class="action-num">1</span>Complete foundational course</div>
+            <div class="action-dot"><span class="action-num">2</span>Build a portfolio project</div>
+            <div class="action-dot"><span class="action-num">3</span>Connect with 5 professionals</div>
+          </div>
+          <button class="dl-btn">Download plan pdf</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
