@@ -12,9 +12,6 @@
 <div class="noise"></div>
 <div class="ripple-container" id="rippleContainer"></div>
 
-<!-- ══════════════════════════════
-     LOADER
-══════════════════════════════ -->
 <div id="loader">
   <div class="loader-mark">
     <svg viewBox="0 0 32 32" fill="none">
@@ -27,9 +24,6 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════
-     PAGE 1 — PROFILE
-══════════════════════════════ -->
 <div class="page" id="profilePage">
   <div class="page-inner">
     <div class="topbar">
@@ -46,7 +40,7 @@
       <h1>Create your profile</h1>
       <p>Tell us about yourself to get started</p>
     </div>
-    <!-- YOUR SKILL -->
+    
     <div class="section-row">
       <div class="section-label">Your skill :</div>
       <div class="chips" id="skill-chips">
@@ -61,7 +55,7 @@
         <button class="chip-add" id="skill-add-btn" onclick="showAddInput('skill')">+Add skill</button>
       </div>
     </div>
-    <!-- EXPERIENCE -->
+    
     <div class="section-row">
       <div class="section-label">Experience level :</div>
       <div class="chips" id="exp-chips">
@@ -70,7 +64,7 @@
         <button class="chip" onclick="toggleSingle(this,'exp-chips')">advanced</button>
       </div>
     </div>
-    <!-- INTERESTS -->
+  
     <div class="section-row" style="flex-direction:column;gap:10px">
       <div class="section-label">Interests :</div>
       <div class="chips" id="interest-chips">
@@ -85,7 +79,7 @@
         <button class="chip-add" id="interest-add-btn" onclick="showAddInput('interest')">+Add interests</button>
       </div>
     </div>
-    <!-- GOAL -->
+   
     <div class="section-row" style="flex-direction:column;gap:10px">
       <div class="section-label">Your Goal:</div>
       <div class="chips" id="goal-chips">
@@ -101,9 +95,7 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════
-     PAGE 2 — PATH GENERATOR RESULTS
-══════════════════════════════ -->
+
 <div class="page" id="pathPage">
   <div class="page-inner">
     <div class="topbar" style="margin-bottom:20px">
@@ -116,12 +108,12 @@
       <p>Based on your profile, here are your personalized result</p>
     </div>
     <div class="path-grid">
-      <!-- Path A -->
+      
       <div class="path-card" onclick="goTo('pathPage','outcomePage')">
         <div class="path-card-header" id="pathA-title">Path A</div>
         <div class="path-card" onclick="selectPath(0)"></div>
         <div class="path-card-icon">
-          <!-- bar chart icon -->
+          
           <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="5" y="18" width="6" height="14" rx="1.5" fill="white" opacity="0.9"/>
             <rect x="16" y="10" width="6" height="22" rx="1.5" fill="white" opacity="0.9"/>
@@ -135,12 +127,12 @@
         </div>
         <button class="view-btn">View Details</button>
       </div>
-      <!-- Path B -->
+     
       <div class="path-card" onclick="goTo('pathPage','outcomePage')">
         <div class="path-card-header" id="pathB-title">Path B</div>
         <div class="path-card" onclick="selectPath(0)"></div>
         <div class="path-card-icon">
-          <!-- trophy icon -->
+         
           <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M19 24C14.03 24 10 19.97 10 15V8H28V15C28 19.97 23.97 24 19 24Z" fill="white" opacity="0.9"/>
             <path d="M10 10H6C6 10 6 17 10 17" stroke="white" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
@@ -156,12 +148,12 @@
         </div>
         <button class="view-btn">View Details</button>
       </div>
-      <!-- Path C -->
+    
       <div class="path-card" onclick="goTo('pathPage','outcomePage')">
         <div class="path-card-header" id="pathC-title">Path C</div>
         <div class="path-card" onclick="selectPath(0)"></div>
         <div class="path-card-icon">
-          <!-- code / terminal icon -->
+          
           <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="4" y="8" width="30" height="22" rx="3" stroke="white" stroke-width="1.8" opacity="0.9"/>
             <line x1="4" y1="14" x2="34" y2="14" stroke="white" stroke-width="1.4" opacity="0.5"/>
@@ -183,9 +175,7 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════
-     PAGE 3 — OUTCOME VISUALIZATION
-══════════════════════════════ -->
+
 <div class="page" id="outcomePage">
   <div class="page-inner">
     <div class="topbar" style="margin-bottom:20px">
@@ -198,9 +188,9 @@
       <p>Based on your profile, here are your personalized career paths.</p>
     </div>
     <div class="outcome-grid">
-      <!-- LEFT -->
+      
       <div class="outcome-left">
-        <!-- Progress Plan -->
+        
         <div class="outcome-card">
           <div class="outcome-card-title">Your Progress Plan.</div>
           <div class="timeline-row"><span class="tl-dot green"></span>In 3 months :</div>
@@ -223,7 +213,7 @@
           </div>
         </div>
       </div>
-      <!-- RIGHT -->
+      
       <div class="outcome-right">
         <div class="best-card">
           <div class="best-card-header"><span class="star-icon">⭐</span> Best Path For You :</div>
