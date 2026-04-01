@@ -1,8 +1,4 @@
-// ══════════════════════════════════════════
-//  CLARIO — script.js  (full rewrite)
-// ══════════════════════════════════════════
 
-// ── Page navigation
 function goTo(fromId, toId) {
   const from = document.getElementById(fromId);
   const to   = document.getElementById(toId);
@@ -13,13 +9,13 @@ function goTo(fromId, toId) {
   to.scrollTop = 0;
 }
 
-// ── Loader → Profile
+
 setTimeout(() => {
   document.getElementById('loader').classList.add('hidden');
   document.getElementById('profilePage').classList.add('active');
 }, 3200);
 
-// ── Global ripple
+
 document.addEventListener('click', function(e) {
   const rc   = document.getElementById('rippleContainer');
   const size = 260;
@@ -30,7 +26,7 @@ document.addEventListener('click', function(e) {
   setTimeout(() => r.remove(), 700);
 });
 
-// ── Mouse glow on chips
+
 document.addEventListener('mousemove', function(e) {
   document.querySelectorAll('.chip, .gen-btn').forEach(function(el) {
     const r = el.getBoundingClientRect();
@@ -39,9 +35,7 @@ document.addEventListener('mousemove', function(e) {
   });
 });
 
-// ══════════════════════════════════════════
-//  CHIP INTERACTIONS
-// ══════════════════════════════════════════
+
 
 function toggleChip(btn) {
   btn.classList.toggle('active');
@@ -58,7 +52,7 @@ function toggleCheck(btn) {
   btn.classList.toggle('active');
 }
 
-// ── Add skill / interest
+
 function showAddInput(type) {
   document.getElementById(type + '-input-wrap').classList.add('show');
   document.getElementById(type + '-add-btn').style.display = 'none';
@@ -103,16 +97,12 @@ function cancelAdd(type) {
   document.getElementById(type + '-add-btn').style.display = '';
 }
 
-// ══════════════════════════════════════════
-//  DATA COLLECTION
-// ══════════════════════════════════════════
 
 function getSelectedChips(containerId) {
   const container = document.getElementById(containerId);
   if (!container) return [];
   const active = container.querySelectorAll('.chip.active, .check-chip.active');
   return Array.from(active).map(function(el) {
-    // Clone and remove the checkbox SVG so we only get the text
     const clone = el.cloneNode(true);
     const box   = clone.querySelector('.check-box');
     if (box) box.remove();
@@ -129,9 +119,6 @@ function getUserData() {
   };
 }
 
-// ══════════════════════════════════════════
-//  CAREER PATH DEFINITIONS
-// ══════════════════════════════════════════
 
 var careerPaths = [
   // 🔹 TECH
@@ -185,13 +172,10 @@ function generateRecommendations(user) {
     function calculateScore(career) {
         let score = 0;
 
-        // Skills weight
         score += career.skills.filter(s => user.skills.includes(s)).length * 3;
 
-        // Interests weight (MOST IMPORTANT)
         score += career.interests.filter(i => user.interests.includes(i)).length * 5;
 
-        // Goals weight
         score += career.goals.filter(g => user.goals.includes(g)).length * 2;
 
         return score;
@@ -199,7 +183,7 @@ function generateRecommendations(user) {
 
     let results = careerPaths
         .map(career => {
-            // 🚫 FILTER OUT IRRELEVANT ONES
+            
             if (!career.interests.some(i => user.interests.includes(i))) {
                 return null;
             }
@@ -209,16 +193,13 @@ function generateRecommendations(user) {
                 score: calculateScore(career)
             };
         })
-        .filter(c => c !== null) // remove filtered ones
+        .filter(c => c !== null) 
         .sort((a, b) => b.score - a.score)
-        .slice(0, 3); // top 3
+        .slice(0, 3); 
 
     return results;
 }
 
-// ══════════════════════════════════════════
-//  SVG ICONS
-// ══════════════════════════════════════════
 
 var ICONS = {
   chart:  '<svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="18" width="6" height="14" rx="1.5" fill="white" opacity="0.9"/><rect x="16" y="10" width="6" height="22" rx="1.5" fill="white" opacity="0.9"/><rect x="27" y="5" width="6" height="27" rx="1.5" fill="white" opacity="0.9"/></svg>',
@@ -226,9 +207,6 @@ var ICONS = {
   code:   '<svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="8" width="30" height="22" rx="3" stroke="white" stroke-width="1.8" opacity="0.9"/><line x1="4" y1="14" x2="34" y2="14" stroke="white" stroke-width="1.4" opacity="0.5"/><circle cx="8.5" cy="11" r="1.2" fill="white" opacity="0.5"/><circle cx="12.5" cy="11" r="1.2" fill="white" opacity="0.5"/><circle cx="16.5" cy="11" r="1.2" fill="white" opacity="0.5"/><path d="M10 20L14 23L10 26" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/><line x1="16" y1="26" x2="27" y2="26" stroke="white" stroke-width="1.6" stroke-linecap="round" opacity="0.7"/></svg>'
 };
 
-// ══════════════════════════════════════════
-//  SCORING
-// ══════════════════════════════════════════
 
 function scorePath(path, user) {
   var score = 0;
@@ -248,9 +226,6 @@ function scorePath(path, user) {
 }
 const recommendations = generateRecommendations(userData);
 displayRecommendations(recommendations);
-// ══════════════════════════════════════════
-//  GENERATE & RENDER PATH CARDS
-// ══════════════════════════════════════════
 
 var generatedResults = [];
 
@@ -283,9 +258,6 @@ function renderPathCards() {
   grid.innerHTML = html;
 }
 
-// ══════════════════════════════════════════
-//  SELECT PATH → OUTCOME PAGE
-// ══════════════════════════════════════════
 
 var selectedPath = null;
 
@@ -299,7 +271,6 @@ function generateOutcome() {
   var user = getUserData();
   var path = selectedPath;
 
-  // Count skill matches
   var matchSkills = 0;
   path.skills.forEach(function(s) {
     if (user.skills.map(function(x) { return x.toLowerCase(); }).indexOf(s.toLowerCase()) !== -1) {
@@ -307,16 +278,13 @@ function generateOutcome() {
     }
   });
 
-  // Base readiness on experience level
   var readiness = 0;
   if (user.level === 'advanced')           readiness = 70;
   else if (user.level === 'intermediate')  readiness = 45;
   else                                     readiness = 20;
 
-  // Bonus for skill matches
   readiness += matchSkills * 12;
 
-  // Bonus for number of skills selected
   readiness += user.skills.length * 4;
 
   if (readiness > 100) readiness = 100;
@@ -326,29 +294,23 @@ function generateOutcome() {
 }
 
 function updateOutcomeUI(path, readiness, skillLevel) {
-  // Timeline rows
   var rows = document.querySelectorAll('.timeline-row');
   if (rows[0]) rows[0].innerHTML = '<span class="tl-dot green"></span>In 3 months : ' + path.steps[0];
   if (rows[1]) rows[1].innerHTML = '<span class="tl-dot yellow"></span>In 6 months : ' + path.steps[1];
   if (rows[2]) rows[2].innerHTML = '<span class="tl-dot blue"></span>In 12 months : ' + path.steps[2];
 
-  // Skill gap bar
   var fill = document.querySelector('.skill-gap-fill');
   if (fill) fill.style.width = readiness + '%';
 
-  // Skill level
   var miniVal = document.querySelector('.mini-value');
   if (miniVal) miniVal.innerHTML = skillLevel + (skillLevel === 'High' ? ' ✅' : ' <span class="warn-icon">⚠️</span>');
 
-  // Potential outcome
   var potVal = document.querySelector('.potential-value');
   if (potVal) potVal.textContent = path.name + ' Professional';
 
-  // Best path header
   var bestHeader = document.querySelector('.best-card-header');
   if (bestHeader) bestHeader.innerHTML = '<span class="star-icon">⭐</span> Best Path For You : ' + path.name;
 
-  // Why this path
   var whyDots = document.querySelectorAll('.why-dot');
   var whyTexts = [
     'Aligns with your current skill set',
@@ -357,7 +319,6 @@ function updateOutcomeUI(path, readiness, skillLevel) {
   ];
   whyDots.forEach(function(el, i) { if (whyTexts[i]) el.textContent = whyTexts[i]; });
 
-  // Action plan
   var actionDots = document.querySelectorAll('.action-dot');
   path.steps.forEach(function(step, i) {
     if (actionDots[i]) actionDots[i].innerHTML = '<span class="action-num">' + (i + 1) + '</span>' + step;
