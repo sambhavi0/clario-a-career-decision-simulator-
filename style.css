@@ -6,19 +6,16 @@
 }
 html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text)}
 
-/* NOISE */
 .noise{position:fixed;inset:0;pointer-events:none;z-index:9999;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size:180px;opacity:0.03}
 
-/* RIPPLE */
 .ripple-container{position:fixed;inset:0;pointer-events:none;z-index:9998;overflow:hidden}
 .ripple{position:absolute;border-radius:50%;
   background:radial-gradient(circle,rgba(100,140,255,.18) 0%,rgba(80,110,255,.07) 50%,transparent 70%);
   transform:scale(0);opacity:1;animation:rippleAnim .65s cubic-bezier(.2,.8,.4,1) forwards;pointer-events:none}
 @keyframes rippleAnim{to{transform:scale(1);opacity:0}}
 
-/* ═══ PAGE SYSTEM ═══ */
 .page{
   position:fixed;inset:0;overflow-y:auto;
   background:linear-gradient(160deg,#080b1e 0%,#0d1232 40%,#08092a 70%,#060818 100%);
@@ -29,16 +26,15 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 .page.active{opacity:1;visibility:visible;pointer-events:all;transform:translateX(0)}
 .page.exit-left{opacity:0;visibility:hidden;pointer-events:none;transform:translateX(-30px)}
 
-/* horizontal lines bg */
 .page::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background:repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(255,255,255,.025) 60px)}
-/* top ambient */
+
 .page::after{content:'';position:fixed;top:-120px;left:50%;transform:translateX(-50%);
   width:700px;height:300px;pointer-events:none;z-index:0;
   background:radial-gradient(ellipse at 50% 0%,rgba(60,90,255,.2) 0%,transparent 70%);
   filter:blur(40px)}
 
-/* ═══ LOADER ═══ */
+
 #loader{
   position:fixed;inset:0;z-index:500;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -66,15 +62,15 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
   animation:textGlow 3s ease-in-out 1s infinite alternate}
 .logo-tag{margin-top:.45rem;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);font-weight:300;animation:tagReveal 1s ease-out 1s both}
 
-/* ═══ SHARED INNER ═══ */
+
 .page-inner{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:28px 32px 60px;min-height:100vh}
 
-/* top bar */
+
 .topbar{display:flex;align-items:center;gap:10px;margin-bottom:32px;animation:fadeUp .6s ease-out .05s both}
 .topbar-mark{width:36px;height:36px;filter:drop-shadow(0 0 5px rgba(160,180,255,.5))}
 .topbar-name{font-family:'DM Sans',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:.18em;text-transform:uppercase}
 
-/* back arrow btn */
+
 .back-btn{
   display:flex;align-items:center;justify-content:center;
   width:32px;height:32px;border-radius:50%;
@@ -83,18 +79,18 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 }
 .back-btn:hover{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.07)}
 
-/* page heading */
+
 .page-heading{text-align:center;margin-bottom:28px;animation:fadeUp .6s ease-out .1s both}
 .page-heading h1{font-size:1.45rem;font-weight:700;margin-bottom:5px}
 .page-heading p{font-size:.78rem;color:var(--muted);font-weight:300}
 
-/* section rows */
+
 .section-row{display:flex;align-items:flex-start;gap:14px;padding:18px 0;border-bottom:1px solid var(--line);animation:fadeUp .5s ease-out both;position:relative}
 .section-row:last-of-type{border-bottom:none}
 .section-label{min-width:130px;font-size:.82rem;font-weight:700;padding-top:7px;white-space:nowrap}
 .chips{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
 
-/* chips */
+
 .chip{display:inline-flex;align-items:center;padding:7px 20px;border-radius:999px;
   border:1.5px solid rgba(255,255,255,.25);background:transparent;color:var(--text);
   font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:400;cursor:pointer;
@@ -145,7 +141,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 .section-row:nth-child(3){animation-delay:.26s}
 .section-row:nth-child(4){animation-delay:.33s}
 
-/* ═══ PATH GENERATOR PAGE ═══ */
+
 #pathPage .page-inner{max-width:760px}
 .path-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:10px}
 
@@ -178,7 +174,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 }
 .path-card-icon svg{width:38px;height:38px;color:var(--text);opacity:.9}
 
-/* lines inside card */
+
 .path-card-lines{padding:0 14px;display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
 .path-line{height:2px;border-radius:2px;background:rgba(255,255,255,.1)}
 .path-line.long{width:100%}
@@ -203,11 +199,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 .path-card:nth-child(2){animation-delay:.18s}
 .path-card:nth-child(3){animation-delay:.26s}
 
-/* ═══ OUTCOME PAGE ═══ */
+
 #outcomePage .page-inner{max-width:900px}
 .outcome-grid{display:grid;grid-template-columns:1fr 300px;gap:18px;margin-top:8px}
 
-/* left panel */
+
 .outcome-left{display:flex;flex-direction:column;gap:14px}
 .outcome-card{
   border:1.5px solid rgba(255,255,255,.12);border-radius:14px;
@@ -241,7 +237,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 .potential-label{font-size:.68rem;color:rgba(100,220,150,.7);margin-bottom:4px;font-weight:500}
 .potential-value{font-size:.82rem;font-weight:600;color:rgba(150,255,180,.9)}
 
-/* right panel */
+
 .outcome-right{display:flex;flex-direction:column;gap:14px}
 .best-card{
   border:1.5px solid rgba(255,200,80,.3);border-radius:14px;
@@ -271,10 +267,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 }
 .dl-btn:hover{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.06)}
 
-/* path page top bar full width */
+
 #pathPage .page-inner,#outcomePage .page-inner{padding-top:28px}
 
-/* ═══ KEYFRAMES ═══ */
+
 @keyframes orbFadeIn{from{opacity:0;transform:translateX(-50%) scaleY(.5)}to{opacity:1;transform:translateX(-50%) scaleY(1)}}
 @keyframes orbPulse{from{opacity:.7;filter:blur(28px)}to{opacity:1;filter:blur(20px) brightness(1.3)}}
 @keyframes lineGrow{from{width:0;opacity:0}to{width:340px;opacity:1}}
@@ -286,7 +282,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @keyframes barGrow{from{width:0}to{width:65%}}
 
-/* responsive */
+
 @media(max-width:600px){
   .path-grid{grid-template-columns:1fr}
   .outcome-grid{grid-template-columns:1fr}
