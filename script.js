@@ -1,84 +1,111 @@
-// ── Page navigation
-function goTo(fromId, toId){
+
+function goTo(fromId, toId) {
   const from = document.getElementById(fromId);
   const to   = document.getElementById(toId);
   from.classList.remove('active');
   from.classList.add('exit-left');
-  setTimeout(()=>{ from.classList.remove('exit-left') }, 800);
+  setTimeout(() => { from.classList.remove('exit-left'); }, 800);
   to.classList.add('active');
   to.scrollTop = 0;
 }
 
-// ── Loader → Profile
-setTimeout(()=>{
+setTimeout(() => {
   document.getElementById('loader').classList.add('hidden');
   document.getElementById('profilePage').classList.add('active');
 }, 3200);
 
-// ── Global ripple
-document.addEventListener('click', e => {
-  const rc = document.getElementById('rippleContainer');
+document.addEventListener('click', function(e) {
+  const rc   = document.getElementById('rippleContainer');
   const size = 260;
-  const r = document.createElement('div');
-  r.className = 'ripple';
-  r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-size/2}px;top:${e.clientY-size/2}px`;
+  const r    = document.createElement('div');
+  r.className  = 'ripple';
+  r.style.cssText = 'width:' + size + 'px;height:' + size + 'px;left:' + (e.clientX - size / 2) + 'px;top:' + (e.clientY - size / 2) + 'px';
   rc.appendChild(r);
-  setTimeout(()=>r.remove(), 700);
+  setTimeout(() => r.remove(), 700);
 });
 
-// ── Mouse glow on chips
-document.addEventListener('mousemove', e => {
-  document.querySelectorAll('.chip,.gen-btn').forEach(el => {
+document.addEventListener('mousemove', function(e) {
+  document.querySelectorAll('.chip, .gen-btn').forEach(function(el) {
     const r = el.getBoundingClientRect();
-    el.style.setProperty('--mx', ((e.clientX-r.left)/r.width*100)+'%');
-    el.style.setProperty('--my', ((e.clientY-r.top)/r.height*100)+'%');
+    el.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+    el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
   });
 });
 
-// ── Chip interactions
-function toggleChip(btn){ btn.classList.toggle('active') }
-function toggleSingle(btn, gid){ document.querySelectorAll('#'+gid+' .chip').forEach(c=>c.classList.remove('active')); btn.classList.add('active') }
-function toggleCheck(btn){ btn.classList.toggle('active') }
 
-// ── Add skill/interest
-function showAddInput(type){
-  document.getElementById(type+'-input-wrap').classList.add('show');
-  document.getElementById(type+'-add-btn').style.display='none';
-  document.getElementById(type+'-input').focus();
+function toggleChip(btn) {
+  btn.classList.toggle('active');
 }
-function addOnEnter(e,type){ if(e.key==='Enter') confirmAdd(type); if(e.key==='Escape') cancelAdd(type) }
-function confirmAdd(type){
-  const input = document.getElementById(type+'-input');
-  const val = input.value.trim();
-  if(val){
-    const chips = document.getElementById(type+'-chips');
-    const wrap  = document.getElementById(type+'-input-wrap');
-    const btn   = document.getElementById(type+'-add-btn');
-    let newChip = document.createElement('button');
-    if(type==='skill'){
-      newChip.className='chip active'; newChip.textContent=val; newChip.onclick=function(){toggleChip(this)};
+
+function toggleSingle(btn, gid) {
+  document.querySelectorAll('#' + gid + ' .chip').forEach(function(c) {
+    c.classList.remove('active');
+  });
+  btn.classList.add('active');
+}
+
+function toggleCheck(btn) {
+  btn.classList.toggle('active');
+}
+
+function showAddInput(type) {
+  document.getElementById(type + '-input-wrap').classList.add('show');
+  document.getElementById(type + '-add-btn').style.display = 'none';
+  document.getElementById(type + '-input').focus();
+}
+
+function addOnEnter(e, type) {
+  if (e.key === 'Enter')  confirmAdd(type);
+  if (e.key === 'Escape') cancelAdd(type);
+}
+
+function confirmAdd(type) {
+  const input = document.getElementById(type + '-input');
+  const val   = input.value.trim();
+  if (val) {
+    const chips = document.getElementById(type + '-chips');
+    const wrap  = document.getElementById(type + '-input-wrap');
+    const btn   = document.getElementById(type + '-add-btn');
+    const newChip = document.createElement('button');
+    if (type === 'skill') {
+      newChip.className = 'chip active';
+      newChip.textContent = val;
+      newChip.setAttribute('onclick', 'toggleChip(this)');
     } else {
-      newChip.className='check-chip active';
-      newChip.innerHTML=`<span class="check-box"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="#e8eaf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>${val}`;
-      newChip.onclick=function(){toggleCheck(this)};
+      newChip.className = 'check-chip active';
+      newChip.innerHTML = '<span class="check-box"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="#e8eaf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>' + val;
+      newChip.setAttribute('onclick', 'toggleCheck(this)');
     }
-    newChip.style.animation='fadeUp .3s ease both';
+    newChip.style.animation = 'fadeUp .3s ease both';
     chips.insertBefore(newChip, wrap);
-    input.value=''; wrap.classList.remove('show'); btn.style.display='';
-  } else cancelAdd(type);
-}
-function cancelAdd(type){
-  document.getElementById(type+'-input').value='';
-  document.getElementById(type+'-input-wrap').classList.remove('show');
-  document.getElementById(type+'-add-btn').style.display='';
+    input.value = '';
+    wrap.classList.remove('show');
+    btn.style.display = '';
+  } else {
+    cancelAdd(type);
+  }
 }
 
-// ── Data collection
+function cancelAdd(type) {
+  document.getElementById(type + '-input').value = '';
+  document.getElementById(type + '-input-wrap').classList.remove('show');
+  document.getElementById(type + '-add-btn').style.display = '';
+}
+
+
 function getSelectedChips(containerId) {
   const container = document.getElementById(containerId);
-  const selected  = container.querySelectorAll('.chip.active, .check-chip.active');
-  return Array.from(selected).map(el => el.innerText.trim());
+  if (!container) return [];
+  const active = container.querySelectorAll('.chip.active, .check-chip.active');
+  return Array.from(active).map(function(el) {
+    
+    const clone = el.cloneNode(true);
+    const box   = clone.querySelector('.check-box');
+    if (box) box.remove();
+    return clone.innerText.trim();
+  });
 }
+
 function getUserData() {
   return {
     skills:    getSelectedChips('skill-chips'),
@@ -88,281 +115,150 @@ function getUserData() {
   };
 }
 
-// ══════════════════════════════════════════
-//  CAREER PATH DEFINITIONS
-// ══════════════════════════════════════════
 
-const careerPaths = [
-  {
-    name: 'Frontend Developer', icon: 'chart',
-    skills: ['Html', 'React'], interests: ['Web development'],
-    goals: ['Get a job', 'Find a Internship'],
-    difficulty: 'medium', timeToGoal: '4-6 months', marketDemand: 'High',
-    steps: ['Master HTML, CSS & React', 'Build a strong portfolio', 'Land a frontend role']
-  },
-  {
-    name: 'Full Stack Developer', icon: 'trophy',
-    skills: ['React', 'Sql', 'Html'], interests: ['Web development', 'AI'],
-    goals: ['Get a job', 'Start a startup'],
-    difficulty: 'high', timeToGoal: '6-9 months', marketDemand: 'High',
-    steps: ['Learn frontend & backend', 'Build full stack projects', 'Join a product company']
-  },
-  {
-    name: 'AI/ML Engineer', icon: 'code',
-    skills: ['Python'], interests: ['AI', 'Data science'],
-    goals: ['Get a job', 'Start a startup'],
-    difficulty: 'high', timeToGoal: '9-12 months', marketDemand: 'Very High',
-    steps: ['Learn Python & ML fundamentals', 'Build AI projects', 'Join an AI team']
-  },
-  {
-    name: 'Data Scientist', icon: 'chart',
-    skills: ['Python', 'Sql'], interests: ['Data science', 'Finance'],
-    goals: ['Get a job', 'Find a Internship'],
-    difficulty: 'medium', timeToGoal: '6-8 months', marketDemand: 'High',
-    steps: ['Learn data analysis & SQL', 'Work on real datasets', 'Get a data analyst role']
-  },
-  {
-    name: 'Cybersecurity Analyst', icon: 'trophy',
-    skills: ['Python', 'Sql'], interests: ['AI', 'Web development'],
-    goals: ['Get a job', 'Find a Internship'],
-    difficulty: 'high', timeToGoal: '7-10 months', marketDemand: 'High',
-    steps: ['Study networking & security', 'Earn certifications', 'Work at a tech firm']
-  },
-  {
-    name: 'UX/UI Designer', icon: 'code',
-    skills: ['Html'], interests: ['Web development'],
-    goals: ['Freelance work', 'Get a job'],
-    difficulty: 'low', timeToGoal: '3-5 months', marketDemand: 'Medium',
-    steps: ['Learn Figma & design basics', 'Build a design portfolio', 'Get freelance or full-time work']
-  },
-  {
-  name: 'Backend Developer', icon: 'code',
-  skills: ['Node.js', 'Sql'], interests: ['Web development'],
-  goals: ['Get a job', 'Find a Internship'],
-  difficulty: 'medium', timeToGoal: '5-7 months', marketDemand: 'High',
-  steps: ['Learn Node.js & APIs', 'Work with databases', 'Build backend systems']
-},
-{
-  name: 'DevOps Engineer', icon: 'trophy',
-  skills: ['Python', 'Linux'], interests: ['Cloud', 'Automation'],
-  goals: ['Get a job', 'Start a startup'],
-  difficulty: 'high', timeToGoal: '8-12 months', marketDemand: 'High',
-  steps: ['Learn CI/CD pipelines', 'Work with Docker & Kubernetes', 'Deploy real apps']
-},
-{
-  name: 'Cloud Engineer', icon: 'chart',
-  skills: ['Python'], interests: ['Cloud', 'Web development'],
-  goals: ['Get a job'],
-  difficulty: 'medium', timeToGoal: '6-9 months', marketDemand: 'High',
-  steps: ['Learn AWS/GCP basics', 'Deploy applications', 'Get certified']
-},
-{
-  name: 'Software Engineer', icon: 'code',
-  skills: ['C++', 'Python'], interests: ['Problem solving'],
-  goals: ['Get a job', 'Crack product companies'],
-  difficulty: 'high', timeToGoal: '6-10 months', marketDemand: 'Very High',
-  steps: ['Learn DSA', 'Practice coding', 'Apply to product companies']
-},
-{
-  name: 'Data Analyst', icon: 'chart',
-  skills: ['Sql', 'Python'], interests: ['Data science'],
-  goals: ['Get a job'],
-  difficulty: 'low', timeToGoal: '3-6 months', marketDemand: 'High',
-  steps: ['Learn Excel & SQL', 'Work on datasets', 'Build dashboards']
-},
-{
-  name: 'Business Analyst', icon: 'trophy',
-  skills: ['Sql'], interests: ['Finance', 'Business'],
-  goals: ['Get a job'],
-  difficulty: 'medium', timeToGoal: '5-7 months', marketDemand: 'High',
-  steps: ['Learn business analysis', 'Work on case studies', 'Apply for analyst roles']
-},
-{
-  name: 'Quantitative Analyst', icon: 'code',
-  skills: ['Python'], interests: ['Finance', 'Data science'],
-  goals: ['Get a job'],
-  difficulty: 'high', timeToGoal: '9-12 months', marketDemand: 'Medium',
-  steps: ['Learn statistics & finance', 'Work on trading models', 'Apply to fintech firms']
-},
-{
-  name: 'Product Designer', icon: 'chart',
-  skills: ['Figma', 'Html'], interests: ['Design', 'Web development'],
-  goals: ['Freelance work', 'Get a job'],
-  difficulty: 'medium', timeToGoal: '4-6 months', marketDemand: 'High',
-  steps: ['Learn UX principles', 'Design case studies', 'Build portfolio']
-},
-{
-  name: 'Frontend + UX Specialist', icon: 'code',
-  skills: ['React', 'Html'], interests: ['Web development', 'Design'],
-  goals: ['Get a job'],
-  difficulty: 'medium', timeToGoal: '5-7 months', marketDemand: 'High',
-  steps: ['Master React', 'Learn UX basics', 'Build polished UI projects']
-},
-{
-  name: 'Web3 Developer', icon: 'trophy',
-  skills: ['JavaScript'], interests: ['Blockchain'],
-  goals: ['Start a startup', 'Get a job'],
-  difficulty: 'high', timeToGoal: '8-12 months', marketDemand: 'Growing',
-  steps: ['Learn blockchain basics', 'Work with smart contracts', 'Build dApps']
-},
-{
-  name: 'AI Product Manager', icon: 'chart',
-  skills: ['Python'], interests: ['AI', 'Business'],
-  goals: ['Get a job'],
-  difficulty: 'high', timeToGoal: '8-10 months', marketDemand: 'Growing',
-  steps: ['Learn product management', 'Understand AI systems', 'Work on case studies']
-},
-{
-  name: 'Technical Content Creator', icon: 'code',
-  skills: ['Python', 'Html'], interests: ['Teaching', 'Tech'],
-  goals: ['Freelance work', 'Build personal brand'],
-  difficulty: 'low', timeToGoal: '2-4 months', marketDemand: 'High',
-  steps: ['Start writing/blogging', 'Create tutorials', 'Grow audience']
-},
-{
-  name: 'Product Manager', icon: 'trophy',
-  skills: ['Communication', 'Analytics'], interests: ['Business', 'Tech'],
-  goals: ['Get a job', 'Start a startup'],
-  difficulty: 'high', timeToGoal: '8-12 months', marketDemand: 'High',
-  steps: ['Learn product thinking', 'Work on case studies', 'Apply for PM roles']
-},
-{
-  name: 'Marketing Specialist', icon: 'chart',
-  skills: ['Communication'], interests: ['Marketing', 'Social media'],
-  goals: ['Freelance work', 'Get a job'],
-  difficulty: 'low', timeToGoal: '3-5 months', marketDemand: 'High',
-  steps: ['Learn digital marketing', 'Run campaigns', 'Work with brands']
-},
-{
-  name: 'Sales Executive', icon: 'trophy',
-  skills: ['Communication'], interests: ['Business'],
-  goals: ['Get a job'],
-  difficulty: 'low', timeToGoal: '2-4 months', marketDemand: 'High',
-  steps: ['Learn sales techniques', 'Practice pitching', 'Join a company']
-},
-{
-  name: 'Graphic Designer', icon: 'code',
-  skills: ['Design'], interests: ['Creativity'],
-  goals: ['Freelance work', 'Get a job'],
-  difficulty: 'low', timeToGoal: '3-6 months', marketDemand: 'Medium',
-  steps: ['Learn design tools', 'Create portfolio', 'Work with clients']
-},
-{
-  name: 'Content Writer', icon: 'chart',
-  skills: ['Writing'], interests: ['Blogging', 'Storytelling'],
-  goals: ['Freelance work'],
-  difficulty: 'low', timeToGoal: '2-4 months', marketDemand: 'High',
-  steps: ['Start writing blogs', 'Build portfolio', 'Get freelance gigs']
-},
-{
-  name: 'Video Editor', icon: 'code',
-  skills: ['Editing'], interests: ['Content creation'],
-  goals: ['Freelance work', 'YouTube'],
-  difficulty: 'low', timeToGoal: '3-5 months', marketDemand: 'High',
-  steps: ['Learn editing tools', 'Edit sample videos', 'Work with creators']
-},
-{
-  name: 'Financial Analyst', icon: 'chart',
-  skills: ['Excel', 'Analytics'], interests: ['Finance'],
-  goals: ['Get a job'],
-  difficulty: 'medium', timeToGoal: '5-8 months', marketDemand: 'High',
-  steps: ['Learn financial modeling', 'Analyze reports', 'Apply to firms']
-},
-{
-  name: 'Investment Banker', icon: 'trophy',
-  skills: ['Finance', 'Communication'], interests: ['Finance'],
-  goals: ['Get a job'],
-  difficulty: 'high', timeToGoal: '10-12 months', marketDemand: 'Medium',
-  steps: ['Study finance concepts', 'Prepare for interviews', 'Join firms']
-},
-{
-  name: 'Teacher / Educator', icon: 'code',
-  skills: ['Communication'], interests: ['Teaching'],
-  goals: ['Get a job'],
-  difficulty: 'low', timeToGoal: '3-6 months', marketDemand: 'High',
-  steps: ['Develop subject knowledge', 'Practice teaching', 'Join institutions']
-},
-{
-  name: 'Career Counselor', icon: 'chart',
-  skills: ['Communication'], interests: ['Helping others'],
-  goals: ['Freelance work'],
-  difficulty: 'medium', timeToGoal: '5-7 months', marketDemand: 'Medium',
-  steps: ['Learn counseling skills', 'Work with students', 'Build trust']
-},
-{
-  name: 'Social Media Manager', icon: 'trophy',
-  skills: ['Communication'], interests: ['Social media'],
-  goals: ['Freelance work', 'Get a job'],
-  difficulty: 'low', timeToGoal: '2-4 months', marketDemand: 'Very High',
-  steps: ['Learn content strategy', 'Manage accounts', 'Grow brands']
-},
-{
-  name: 'Influencer / Content Creator', icon: 'code',
-  skills: ['Communication'], interests: ['Content creation'],
-  goals: ['Build personal brand'],
-  difficulty: 'medium', timeToGoal: '6-12 months', marketDemand: 'Growing',
-  steps: ['Choose niche', 'Post consistently', 'Grow audience']
-},
-{
-  name: 'Freelancer (Multi-skill)', icon: 'chart',
-  skills: ['Communication'], interests: ['Independence'],
-  goals: ['Freelance work'],
-  difficulty: 'medium', timeToGoal: '4-8 months', marketDemand: 'High',
-  steps: ['Learn a skill', 'Build portfolio', 'Get clients']
-}
+var careerPaths = [
+  // 🔹 TECH
+  { name: 'Frontend Developer', skills: ['Html', 'React'], interests: ['Web development'], goals: ['Get a job'], difficulty: 'medium', timeToGoal: '4-6 months', marketDemand: 'High', steps: ['Learn HTML/CSS/JS', 'Build projects', 'Apply for jobs'] },
+  { name: 'Backend Developer', skills: ['Node.js', 'Sql'], interests: ['Web development'], goals: ['Get a job'], difficulty: 'medium', timeToGoal: '5-7 months', marketDemand: 'High', steps: ['Learn backend', 'Build APIs', 'Work with DB'] },
+  { name: 'Full Stack Developer', skills: ['React', 'Node.js'], interests: ['Web development'], goals: ['Get a job'], difficulty: 'high', timeToGoal: '6-9 months', marketDemand: 'High', steps: ['Learn full stack', 'Build apps', 'Apply'] },
+  { name: 'Mobile App Developer', skills: ['React'], interests: ['App development'], goals: ['Get a job'], difficulty: 'medium', timeToGoal: '5-8 months', marketDemand: 'High', steps: ['Learn React Native', 'Build apps', 'Publish'] },
+  { name: 'Game Developer', skills: ['Programming'], interests: ['Gaming'], goals: ['Get a job'], difficulty: 'high', timeToGoal: '8-12 months', marketDemand: 'Medium', steps: ['Learn game engines', 'Build games', 'Join studios'] },
+  { name: 'DevOps Engineer', skills: ['Python'], interests: ['Cloud'], goals: ['Get a job'], difficulty: 'high', timeToGoal: '8-12 months', marketDemand: 'High', steps: ['Learn CI/CD', 'Use Docker', 'Deploy apps'] },
+  { name: 'Cloud Engineer', skills: ['Python'], interests: ['Cloud'], goals: ['Get a job'], difficulty: 'medium', timeToGoal: '6-9 months', marketDemand: 'High', steps: ['Learn AWS', 'Deploy apps', 'Get certified'] },
+  { name: 'Cybersecurity Analyst', skills: ['Python'], interests: ['Security'], goals: ['Get a job'], difficulty: 'high', timeToGoal: '7-10 months', marketDemand: 'High', steps: ['Learn networking', 'Practice security', 'Get certified'] },
+
+  // 🔹 DATA / AI
+  { name: 'Data Scientist', skills: ['Python', 'Sql'], interests: ['Data science'], goals: ['Get a job'], difficulty: 'medium', timeToGoal: '6-8 months', marketDemand: 'High', steps: ['Learn ML', 'Analyze data', 'Build projects'] },
+  { name: 'Data Analyst', skills: ['Sql'], interests: ['Data science'], goals: ['Get a job'], difficulty: 'low', timeToGoal: '3-6 months', marketDemand: 'High', steps: ['Learn SQL', 'Create dashboards', 'Apply'] },
+  { name: 'AI/ML Engineer', skills: ['Python'], interests: ['AI'], goals: ['Get a job'], difficulty: 'high', timeToGoal: '9-12 months', marketDemand: 'Very High', steps: ['Learn ML', 'Build models', 'Join AI teams'] },
+  { name: 'Business Analyst', skills: ['Analytics'], interests: ['Business'], goals: ['Get a job'], difficulty: 'medium', timeToGoal: '5-7 months', marketDemand: 'High', steps: ['Learn business analysis', 'Work on case studies', 'Apply'] },
+
+  // 🔹 DESIGN / CREATIVE
+  { name: 'UX/UI Designer', skills: ['Design'], interests: ['Design'], goals: ['Freelance work'], difficulty: 'low', timeToGoal: '3-5 months', marketDemand: 'Medium', steps: ['Learn Figma', 'Build portfolio', 'Get clients'] },
+  { name: 'Graphic Designer', skills: ['Design'], interests: ['Creativity'], goals: ['Freelance work'], difficulty: 'low', timeToGoal: '3-6 months', marketDemand: 'Medium', steps: ['Learn tools', 'Create portfolio', 'Work'] },
+  { name: 'Video Editor', skills: ['Editing'], interests: ['Content creation'], goals: ['Freelance work'], difficulty: 'low', timeToGoal: '3-5 months', marketDemand: 'High', steps: ['Learn editing', 'Edit videos', 'Work with creators'] },
+  { name: 'Content Creator', skills: ['Communication'], interests: ['Content creation'], goals: ['Freelance work'], difficulty: 'low', timeToGoal: '2-6 months', marketDemand: 'Very High', steps: ['Create content', 'Grow audience', 'Monetize'] },
+
+  // 🔹 MARKETING
+  { name: 'Digital Marketer', skills: ['Communication'], interests: ['Marketing'], goals: ['Get a job'], difficulty: 'low', timeToGoal: '3-5 months', marketDemand: 'High', steps: ['Learn SEO', 'Run ads', 'Work with brands'] },
+  { name: 'Social Media Manager', skills: ['Communication'], interests: ['Social media'], goals: ['Freelance work'], difficulty: 'low', timeToGoal: '2-4 months', marketDemand: 'Very High', steps: ['Manage pages', 'Grow accounts', 'Work with brands'] },
+  { name: 'SEO Specialist', skills: ['Analytics'], interests: ['Marketing'], goals: ['Get a job'], difficulty: 'low', timeToGoal: '3-5 months', marketDemand: 'High', steps: ['Learn SEO', 'Optimize sites', 'Get clients'] },
+  { name: 'Brand Strategist', skills: ['Communication'], interests: ['Business'], goals: ['Get a job'], difficulty: 'medium', timeToGoal: '6-8 months', marketDemand: 'Medium', steps: ['Study branding', 'Work on campaigns', 'Join firms'] },
+
+  // 🔹 FINANCE
+  { name: 'Financial Analyst', skills: ['Excel'], interests: ['Finance'], goals: ['Get a job'], difficulty: 'medium', timeToGoal: '5-8 months', marketDemand: 'High', steps: ['Learn finance', 'Analyze data', 'Apply'] },
+  { name: 'Investment Analyst', skills: ['Analytics'], interests: ['Finance'], goals: ['Get a job'], difficulty: 'high', timeToGoal: '8-12 months', marketDemand: 'Medium', steps: ['Study markets', 'Analyze stocks', 'Join firms'] },
+  { name: 'Accountant', skills: ['Excel'], interests: ['Finance'], goals: ['Get a job'], difficulty: 'low', timeToGoal: '3-6 months', marketDemand: 'High', steps: ['Learn accounting', 'Work in firms'] },
+  { name: 'Banking Professional', skills: ['Communication'], interests: ['Finance'], goals: ['Get a job'], difficulty: 'medium', timeToGoal: '5-8 months', marketDemand: 'High', steps: ['Prepare exams', 'Join bank'] },
+  { name: 'Tax Consultant', skills: ['Finance'], interests: ['Finance'], goals: ['Freelance work'], difficulty: 'medium', timeToGoal: '6-9 months', marketDemand: 'High', steps: ['Learn tax', 'Handle clients'] },
+
+  // 🔹 HUMANITIES
+  { name: 'Journalist', skills: ['Writing'], interests: ['Media'], goals: ['Get a job'], difficulty: 'medium', timeToGoal: '4-6 months', marketDemand: 'Medium', steps: ['Write articles', 'Build portfolio'] },
+  { name: 'Lawyer', skills: ['Communication'], interests: ['Law'], goals: ['Get a job'], difficulty: 'high', timeToGoal: '3-5 years', marketDemand: 'High', steps: ['Study law', 'Practice'] },
+  { name: 'Psychologist', skills: ['Communication'], interests: ['Psychology'], goals: ['Get a job'], difficulty: 'high', timeToGoal: '2-3 years', marketDemand: 'Medium', steps: ['Study psychology', 'Practice'] },
+  { name: 'Teacher', skills: ['Communication'], interests: ['Education'], goals: ['Get a job'], difficulty: 'medium', timeToGoal: '1-2 years', marketDemand: 'High', steps: ['Study subject', 'Teach students'] },
+  { name: 'Civil Services Aspirant', skills: ['Communication'], interests: ['Government'], goals: ['Government job'], difficulty: 'high', timeToGoal: '1-2 years', marketDemand: 'Very High', steps: ['Prepare exams', 'Study daily'] },
+
+  // 🔹 GENERAL / FLEXIBLE
+  { name: 'Entrepreneur', skills: ['Communication'], interests: ['Business'], goals: ['Start a startup'], difficulty: 'high', timeToGoal: 'Varies', marketDemand: 'High', steps: ['Build idea', 'Launch startup'] },
+  { name: 'Freelancer', skills: ['Communication'], interests: ['Independence'], goals: ['Freelance work'], difficulty: 'medium', timeToGoal: '3-6 months', marketDemand: 'High', steps: ['Learn skill', 'Find clients'] }
+
 ];
+function generateRecommendations(user) {
+    function calculateScore(career) {
+        let score = 0;
 
-const ICONS = {
-  chart: '<svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="18" width="6" height="14" rx="1.5" fill="white" opacity="0.9"/><rect x="16" y="10" width="6" height="22" rx="1.5" fill="white" opacity="0.9"/><rect x="27" y="5" width="6" height="27" rx="1.5" fill="white" opacity="0.9"/></svg>',
+      
+        score += career.skills.filter(s => user.skills.includes(s)).length * 3;
+
+    
+        score += career.interests.filter(i => user.interests.includes(i)).length * 5;
+
+      
+        score += career.goals.filter(g => user.goals.includes(g)).length * 2;
+
+        return score;
+    }
+
+    let results = careerPaths
+        .map(career => {
+          
+            if (!career.interests.some(i => user.interests.includes(i))) {
+                return null;
+            }
+
+            return {
+                ...career,
+                score: calculateScore(career)
+            };
+        })
+        .filter(c => c !== null) 
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3); 
+
+    return results;
+}
+
+
+var ICONS = {
+  chart:  '<svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="18" width="6" height="14" rx="1.5" fill="white" opacity="0.9"/><rect x="16" y="10" width="6" height="22" rx="1.5" fill="white" opacity="0.9"/><rect x="27" y="5" width="6" height="27" rx="1.5" fill="white" opacity="0.9"/></svg>',
   trophy: '<svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 24C14.03 24 10 19.97 10 15V8H28V15C28 19.97 23.97 24 19 24Z" fill="white" opacity="0.9"/><path d="M10 10H6C6 10 6 17 10 17" stroke="white" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/><path d="M28 10H32C32 10 32 17 28 17" stroke="white" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/><rect x="15" y="24" width="8" height="4" rx="1" fill="white" opacity="0.7"/><rect x="12" y="28" width="14" height="2.5" rx="1.2" fill="white" opacity="0.6"/></svg>',
-  code: '<svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="8" width="30" height="22" rx="3" stroke="white" stroke-width="1.8" opacity="0.9"/><line x1="4" y1="14" x2="34" y2="14" stroke="white" stroke-width="1.4" opacity="0.5"/><circle cx="8.5" cy="11" r="1.2" fill="white" opacity="0.5"/><circle cx="12.5" cy="11" r="1.2" fill="white" opacity="0.5"/><circle cx="16.5" cy="11" r="1.2" fill="white" opacity="0.5"/><path d="M10 20L14 23L10 26" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/><line x1="16" y1="26" x2="27" y2="26" stroke="white" stroke-width="1.6" stroke-linecap="round" opacity="0.7"/></svg>'
+  code:   '<svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="8" width="30" height="22" rx="3" stroke="white" stroke-width="1.8" opacity="0.9"/><line x1="4" y1="14" x2="34" y2="14" stroke="white" stroke-width="1.4" opacity="0.5"/><circle cx="8.5" cy="11" r="1.2" fill="white" opacity="0.5"/><circle cx="12.5" cy="11" r="1.2" fill="white" opacity="0.5"/><circle cx="16.5" cy="11" r="1.2" fill="white" opacity="0.5"/><path d="M10 20L14 23L10 26" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/><line x1="16" y1="26" x2="27" y2="26" stroke="white" stroke-width="1.6" stroke-linecap="round" opacity="0.7"/></svg>'
 };
 
-// ── Scoring
+
 function scorePath(path, user) {
-  let score = 0;
-  path.skills.forEach(s => { if (user.skills.map(x => x.toLowerCase()).includes(s.toLowerCase())) score += 2; });
-  path.interests.forEach(i => { if (user.interests.includes(i)) score += 2; });
-  path.goals.forEach(g => { if (user.goals.includes(g)) score += 1; });
+  var score = 0;
+  path.skills.forEach(function(s) {
+    if (user.skills.map(function(x) { return x.toLowerCase(); }).indexOf(s.toLowerCase()) !== -1) score += 2;
+  });
+  path.interests.forEach(function(i) {
+    if (user.interests.indexOf(i) !== -1) score += 2;
+  });
+  path.goals.forEach(function(g) {
+    if (user.goals.indexOf(g) !== -1) score += 1;
+  });
   if (user.level === 'beginner'     && path.difficulty === 'high') score -= 2;
   if (user.level === 'advanced'     && path.difficulty === 'low')  score -= 1;
   if (user.level === 'intermediate' && path.difficulty === 'high') score -= 1;
   return score;
 }
+const recommendations = generateRecommendations(userData);
+displayRecommendations(recommendations);
 
-// ── Generate & render path cards
-let generatedResults = [];
+var generatedResults = [];
 
 function handleGenerate() {
-  const user = getUserData();
+  var user = getUserData();
   generatedResults = careerPaths
-    .map(path => ({ ...path, score: scorePath(path, user) }))
-    .sort((a, b) => b.score - a.score)
+    .map(function(path) {
+      return Object.assign({}, path, { score: scorePath(path, user) });
+    })
+    .sort(function(a, b) { return b.score - a.score; })
     .slice(0, 3);
   renderPathCards();
   goTo('profilePage', 'pathPage');
 }
 
 function renderPathCards() {
-  const grid = document.querySelector('.path-grid');
+  var grid = document.querySelector('.path-grid');
   if (!grid) return;
-  const labels = ['Path A', 'Path B', 'Path C'];
-  grid.innerHTML = generatedResults.map((path, i) => `
-    <div class="path-card" onclick="selectPath(${i})">
-      <div class="path-card-header">${labels[i]} - ${path.name}</div>
-      <div class="path-card-icon">${ICONS[path.icon] || ICONS.code}</div>
-      <div class="path-card-lines">
-        <div class="path-line long"></div>
-        <div class="path-line med"></div>
-        <div class="path-line short"></div>
-      </div>
-      <button class="view-btn">View Details</button>
-    </div>
-  `).join('');
+  var labels = ['Path A', 'Path B', 'Path C'];
+  var html = '';
+  for (var i = 0; i < generatedResults.length; i++) {
+    var path = generatedResults[i];
+    html += '<div class="path-card" onclick="selectPath(' + i + ')">';
+    html += '<div class="path-card-header">' + labels[i] + ' · ' + path.name + '</div>';
+    html += '<div class="path-card-icon">' + (ICONS[path.icon] || ICONS.code) + '</div>';
+    html += '<div class="path-card-lines"><div class="path-line long"></div><div class="path-line med"></div><div class="path-line short"></div></div>';
+    html += '<button class="view-btn">View Details</button>';
+    html += '</div>';
+  }
+  grid.innerHTML = html;
 }
 
-// ── Select path → outcome page
-let selectedPath = null;
+
+var selectedPath = null;
 
 function selectPath(index) {
   selectedPath = generatedResults[index];
@@ -371,51 +267,69 @@ function selectPath(index) {
 }
 
 function generateOutcome() {
-  const user = getUserData();
-  const path = selectedPath;
-  const matchSkills = path.skills.filter(s =>
-    user.skills.map(x => x.toLowerCase()).includes(s.toLowerCase())
-  ).length;
-  const readiness  = Math.min(100, Math.floor((matchSkills / Math.max(path.skills.length, 1)) * 100));
-  const skillLevel = readiness > 70 ? 'High' : readiness > 40 ? 'Medium' : 'Low';
+  var user = getUserData();
+  var path = selectedPath;
+
+
+  var matchSkills = 0;
+  path.skills.forEach(function(s) {
+    if (user.skills.map(function(x) { return x.toLowerCase(); }).indexOf(s.toLowerCase()) !== -1) {
+      matchSkills++;
+    }
+  });
+
+
+  var readiness = 0;
+  if (user.level === 'advanced')           readiness = 70;
+  else if (user.level === 'intermediate')  readiness = 45;
+  else                                     readiness = 20;
+
+  readiness += matchSkills * 12;
+
+
+  readiness += user.skills.length * 4;
+
+  if (readiness > 100) readiness = 100;
+
+  var skillLevel = readiness >= 70 ? 'High' : readiness >= 40 ? 'Medium' : 'Low';
   updateOutcomeUI(path, readiness, skillLevel);
 }
 
 function updateOutcomeUI(path, readiness, skillLevel) {
-  // Timeline
-  const timelineRows = document.querySelectorAll('.timeline-row');
-  if (timelineRows[0]) timelineRows[0].innerHTML = '<span class="tl-dot green"></span>In 3 months : ' + path.steps[0];
-  if (timelineRows[1]) timelineRows[1].innerHTML = '<span class="tl-dot yellow"></span>In 6 months : ' + path.steps[1];
-  if (timelineRows[2]) timelineRows[2].innerHTML = '<span class="tl-dot blue"></span>In 12 months : ' + path.steps[2];
+  
+  var rows = document.querySelectorAll('.timeline-row');
+  if (rows[0]) rows[0].innerHTML = '<span class="tl-dot green"></span>In 3 months : ' + path.steps[0];
+  if (rows[1]) rows[1].innerHTML = '<span class="tl-dot yellow"></span>In 6 months : ' + path.steps[1];
+  if (rows[2]) rows[2].innerHTML = '<span class="tl-dot blue"></span>In 12 months : ' + path.steps[2];
 
-  // Skill gap bar
-  const fill = document.querySelector('.skill-gap-fill');
+
+  var fill = document.querySelector('.skill-gap-fill');
   if (fill) fill.style.width = readiness + '%';
 
-  // Skill level
-  const miniVal = document.querySelector('.mini-value');
+ 
+  var miniVal = document.querySelector('.mini-value');
   if (miniVal) miniVal.innerHTML = skillLevel + (skillLevel === 'High' ? ' ✅' : ' <span class="warn-icon">⚠️</span>');
 
-  // Potential outcome
-  const potVal = document.querySelector('.potential-value');
+ 
+  var potVal = document.querySelector('.potential-value');
   if (potVal) potVal.textContent = path.name + ' Professional';
 
-  // Best path header
-  const bestHeader = document.querySelector('.best-card-header');
+ 
+  var bestHeader = document.querySelector('.best-card-header');
   if (bestHeader) bestHeader.innerHTML = '<span class="star-icon">⭐</span> Best Path For You : ' + path.name;
 
-  // Why this path
-  const whyDots = document.querySelectorAll('.why-dot');
-  const whyTexts = [
+ 
+  var whyDots = document.querySelectorAll('.why-dot');
+  var whyTexts = [
     'Aligns with your current skill set',
     'Matches your stated goals',
-    path.marketDemand + ' market demand - ' + path.timeToGoal
+    path.marketDemand + ' market demand · ' + path.timeToGoal
   ];
-  whyDots.forEach((el, i) => { if (whyTexts[i]) el.textContent = whyTexts[i]; });
+  whyDots.forEach(function(el, i) { if (whyTexts[i]) el.textContent = whyTexts[i]; });
 
-  // Action plan
-  const actionDots = document.querySelectorAll('.action-dot');
-  path.steps.forEach((step, i) => {
-    if (actionDots[i]) actionDots[i].innerHTML = '<span class="action-num">' + (i+1) + '</span>' + step;
+
+  var actionDots = document.querySelectorAll('.action-dot');
+  path.steps.forEach(function(step, i) {
+    if (actionDots[i]) actionDots[i].innerHTML = '<span class="action-num">' + (i + 1) + '</span>' + step;
   });
 }
